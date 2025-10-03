@@ -66,10 +66,10 @@ class _NotesPageState extends State<NotesPage> {
       appBar: AppBar(
         title: Text(
           'Практика 5: Список заметок',
-          style: TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Colors.limeAccent,
+        backgroundColor: const Color.fromARGB(255, 136, 12, 158),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,
