@@ -63,7 +63,14 @@ class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Simple Notes')),
+      appBar: AppBar(
+        title: Text(
+          'Практика 5: Список заметок',
+          style: TextStyle(fontStyle: FontStyle.italic),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.limeAccent,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,
         child: const Icon(Icons.add),
