@@ -85,7 +85,7 @@ class _NotesPageState extends State<NotesPage> {
                   ),
                   onTap: () => _edit(note),
                   trailing: IconButton(
-                    icon: const Icon(Icon.delete_outline),
+                    icon: const Icon(Icons.delete_outline),
                     onPressed: () => _delete(note),
                   ),
                 );
