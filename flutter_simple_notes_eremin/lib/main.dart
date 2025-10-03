@@ -10,8 +10,9 @@ class SimpleNotesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Simple Notes',
+      title: 'Практика 5',
       // theme: ThemeData(useMaterial3: true),
+      debugShowCheckedModeBanner: false,
       home: NotesPage(),
     );
   }
