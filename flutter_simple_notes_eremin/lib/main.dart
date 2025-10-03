@@ -86,20 +86,32 @@ class _NotesPageState extends State<NotesPage> {
               itemCount: _notes.length,
               itemBuilder: (context, i) {
                 final note = _notes[i];
-                return ListTile(
+                return Dismissible(
                   key: ValueKey(note.id),
-                  title: Text(
-                    note.title.isEmpty ? '(без названия)' : note.title,
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(right: 20),
+                    child: const Icon(Icons.delete, color: Colors.white),
                   ),
-                  subtitle: Text(
-                    note.body,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  onTap: () => _edit(note),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete_outline),
-                    onPressed: () => _delete(note),
+                  onDismissed: (direction) {
+                    _delete(note);
+                  },
+                  child: ListTile(
+                    title: Text(
+                      note.title.isEmpty ? '(без названия)' : note.title,
+                    ),
+                    subtitle: Text(
+                      note.body,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () => _edit(note),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete_outline),
+                      onPressed: () => _delete(note),
+                    ),
                   ),
                 );
               },
