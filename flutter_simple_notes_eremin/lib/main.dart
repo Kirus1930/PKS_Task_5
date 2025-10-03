@@ -69,7 +69,7 @@ class _NotesPageState extends State<NotesPage> {
           style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 136, 12, 158),
+        backgroundColor: Colors.deepPurpleAccent,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,
