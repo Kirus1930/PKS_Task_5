@@ -31,6 +31,41 @@ class _EditNotePageState extends State<EditNotePage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final isEdit = widget.existing != null;
+    return Scaffold(
+      appBar: AppBar(title: Text(isEdit ? 'Редактировать' : 'Новая заметка')),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                initialValue: _title,
+                decoration: const InputDecoration(labelText: 'Заголовок'),
+                onSaved: (v) => _title = v!.trim(),
+              ),
+              SizedBox(height: 12),
+              TextFormField(
+                initialValue: _body,
+                decoration: const InputDecoration(labelText: 'Текст'),
+                minLines: 3,
+                maxLines: 6,
+                onSaved: (v) => _body = v!.trim(),
+                validator: (v) => (v == null || v.trim().isEmpty)
+                    ? 'Введите текст заметки'
+                    : null,
+              ),
+              Spacer(),
+              FilledButton.icon(
+                onPressed: _save,
+                icon: const Icon(Icons.check),
+                label: const Text('Сохранить'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
