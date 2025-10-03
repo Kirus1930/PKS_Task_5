@@ -33,7 +33,15 @@ class _EditNotePageState extends State<EditNotePage> {
   Widget build(BuildContext context) {
     final isEdit = widget.existing != null;
     return Scaffold(
-      appBar: AppBar(title: Text(isEdit ? 'Редактировать' : 'Новая заметка')),
+      appBar: AppBar(
+        title: Text(
+          isEdit ? 'Редактировать' : 'Новая заметка',
+          style: TextStyle(
+            backgroundColor: Colors.deepPurpleAccent,
+            color: Colors.white,
+          ),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Form(
@@ -50,7 +58,7 @@ class _EditNotePageState extends State<EditNotePage> {
                 initialValue: _body,
                 decoration: const InputDecoration(labelText: 'Текст'),
                 minLines: 2,
-                maxLines: 6,
+                maxLines: 8,
                 onSaved: (v) => _body = v!.trim(),
                 validator: (v) => (v == null || v.trim().isEmpty)
                     ? 'Введите текст заметки'
