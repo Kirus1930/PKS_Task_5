@@ -36,7 +36,7 @@ class _EditNotePageState extends State<EditNotePage> {
       appBar: AppBar(
         title: Text(
           isEdit ? 'Редактировать' : 'Новая заметка',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         backgroundColor: Colors.deepPurpleAccent,
       ),
