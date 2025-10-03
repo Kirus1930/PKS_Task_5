@@ -49,7 +49,7 @@ class _EditNotePageState extends State<EditNotePage> {
               TextFormField(
                 initialValue: _body,
                 decoration: const InputDecoration(labelText: 'Текст'),
-                minLines: 3,
+                minLines: 2,
                 maxLines: 6,
                 onSaved: (v) => _body = v!.trim(),
                 validator: (v) => (v == null || v.trim().isEmpty)
