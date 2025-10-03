@@ -11,7 +11,7 @@ class SimpleNotesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Simple Notes',
-      theme: ThemeData(useMaterial3: true),
+      // theme: ThemeData(useMaterial3: true),
       home: NotesPage(),
     );
   }
