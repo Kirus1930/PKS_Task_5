@@ -66,7 +66,7 @@ class _NotesPageState extends State<NotesPage> {
       appBar: AppBar(
         title: Text(
           'Практика 5: Список заметок',
-          style: TextStyle(fontStyle: FontStyle.italic),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: Colors.limeAccent,
@@ -76,7 +76,12 @@ class _NotesPageState extends State<NotesPage> {
         child: const Icon(Icons.add),
       ),
       body: _notes.isEmpty
-          ? const Center(child: Text('Пока нет заметок. Нажмите +'))
+          ? const Center(
+              child: Text(
+                'Пока нет заметок. Нажмите +',
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
+            )
           : ListView.builder(
               itemCount: _notes.length,
               itemBuilder: (context, i) {
