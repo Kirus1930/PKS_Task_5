@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'models/note.dart';
+import 'edit_note_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() => runApp(const SimpleNotesApp());
+
+class SimpleNotesApp extends StatelessWidget {
+  const SimpleNotesApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
 
 class MyApp extends StatelessWidget {
