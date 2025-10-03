@@ -12,7 +12,7 @@ class SimpleNotesApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Simple Notes',
       theme: ThemeData(useMaterial3: true),
-      home: const NotesPage();
+      home: NotesPage(),
     );
   }
 }
@@ -54,43 +54,43 @@ class _NotesPageState extends State<NotesPage> {
 
   void _delete(Note note) {
     setState(() => _notes.removeWhere((n) => n.id == note.id));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Заметка удалена')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Заметка удалена')));
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Simple Notes'),
-      ),
+      appBar: AppBar(title: const Text('Simple Notes')),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,
         child: const Icon(Icons.add),
       ),
-      body: _notes.isEmpty ? const Center(
-        child: Text('Пока нет заметок. Нажмите +'),
-      ) : ListView.builder(
-        itemCount: _notes.length,
-        itemBuilder: (context, i) {
-          final note = _notes[i];
-          return ListTile(
-            key: ValueKey(note.id),
-            title: Text(note.title.isEmpty ? '(без названия)' : note.title),
-            subtitle: Text(
-              note.body,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+      body: _notes.isEmpty
+          ? const Center(child: Text('Пока нет заметок. Нажмите +'))
+          : ListView.builder(
+              itemCount: _notes.length,
+              itemBuilder: (context, i) {
+                final note = _notes[i];
+                return ListTile(
+                  key: ValueKey(note.id),
+                  title: Text(
+                    note.title.isEmpty ? '(без названия)' : note.title,
+                  ),
+                  subtitle: Text(
+                    note.body,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  onTap: () => _edit(note),
+                  trailing: IconButton(
+                    icon: const Icon(Icon.delete_outline),
+                    onPressed: () => _delete(note),
+                  ),
+                );
+              },
             ),
-            onTap: () => _edit(note),
-            trailing: IconButton(
-              icon: const Icon(Icon.delete_outline),
-              onPressed: () => _delete(note),
-            ),
-          );
-        },
-      ),
     );
   }
 }
