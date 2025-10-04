@@ -96,7 +96,7 @@ class _NotesPageState extends State<NotesPage> {
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 222, 220, 220),
+                        color: const Color.fromARGB(255, 234, 231, 231),
                         blurRadius: 2,
                         offset: const Offset(0, 1),
                       ),
