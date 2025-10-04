@@ -30,13 +30,60 @@ class _NotesPageState extends State<NotesPage> {
     Note(id: '1', title: 'Пример', body: 'Это пример заметки'),
   ];
 
+  final TextEditingController _searchController = TextEditingController();
+  List<Note> _filteredNotes = [];
+  bool _isSearching = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredNotes = _notes;
+    _searchController.addListener(_filterNotes);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterNotes() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      if (query.isEmpty) {
+        _filteredNotes = _notes;
+      } else {
+        _filteredNotes = _notes
+            .where((note) => note.title.toLowerCase().contains(query))
+            .toList();
+      }
+    });
+  }
+
+  void _startSearch() {
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+  void _stopSearch() {
+    setState(() {
+      _isSearching = false;
+      _searchController.clear();
+      _filteredNotes = _notes;
+    });
+  }
+
   Future<void> _addNote() async {
     final newNote = await Navigator.push<Note>(
       context,
       MaterialPageRoute(builder: (_) => EditNotePage()),
     );
     if (newNote != null) {
-      setState(() => _notes.add(newNote));
+      setState(() {
+        _notes.add(newNote);
+        _filterNotes(); // Обновляем фильтрацию после добавления
+      });
     }
   }
 
@@ -49,12 +96,16 @@ class _NotesPageState extends State<NotesPage> {
       setState(() {
         final i = _notes.indexWhere((n) => n.id == updated.id);
         if (i != -1) _notes[i] = updated;
+        _filterNotes(); // Обновляем фильтрацию после редактирования
       });
     }
   }
 
   void _delete(Note note) {
-    setState(() => _notes.removeWhere((n) => n.id == note.id));
+    setState(() {
+      _notes.removeWhere((n) => n.id == note.id);
+      _filterNotes(); // Обновляем фильтрацию после удаления
+    });
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('Заметка удалена')));
@@ -64,28 +115,73 @@ class _NotesPageState extends State<NotesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Практика 5: Список заметок',
-          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
-        ),
+        title: _isSearching
+            ? TextField(
+                controller: _searchController,
+                autofocus: true,
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                  hintText: 'Поиск по заголовку...',
+                  hintStyle: TextStyle(color: Colors.white70),
+                  border: InputBorder.none,
+                ),
+              )
+            : Text(
+                'Практика 5: Список заметок',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
         centerTitle: true,
         backgroundColor: Colors.deepPurpleAccent,
+        actions: [
+          if (_isSearching)
+            IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: _stopSearch,
+            )
+          else
+            IconButton(
+              icon: const Icon(Icons.search, color: Colors.white),
+              onPressed: _startSearch,
+            ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addNote,
         child: const Icon(Icons.add),
       ),
-      body: _notes.isEmpty
-          ? const Center(
-              child: Text(
-                'Пока нет заметок. Нажмите +',
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 20),
+      body: _filteredNotes.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    _searchController.text.isEmpty
+                        ? Icons.note_add
+                        : Icons.search_off,
+                    size: 64,
+                    color: Colors.grey.shade400,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    _searchController.text.isEmpty
+                        ? 'Пока нет заметок. Нажмите +'
+                        : 'Заметки не найдены',
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 20,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ],
               ),
             )
           : ListView.builder(
-              itemCount: _notes.length,
+              itemCount: _filteredNotes.length,
               itemBuilder: (context, i) {
-                final note = _notes[i];
+                final note = _filteredNotes[i];
                 return Container(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 8,
@@ -96,7 +192,7 @@ class _NotesPageState extends State<NotesPage> {
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 234, 231, 231),
+                        color: const Color.fromARGB(255, 243, 240, 240),
                         blurRadius: 2,
                         offset: const Offset(0, 1),
                       ),
