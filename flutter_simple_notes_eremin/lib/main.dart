@@ -96,7 +96,7 @@ class _NotesPageState extends State<NotesPage> {
                     borderRadius: BorderRadius.circular(8),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
+                        color: const Color.fromARGB(255, 222, 220, 220),
                         blurRadius: 2,
                         offset: const Offset(0, 1),
                       ),
@@ -119,7 +119,7 @@ class _NotesPageState extends State<NotesPage> {
                     },
                     child: ListTile(
                       title: Text(
-                        note.title.isEmpty ? '(без названия)' : note.title,
+                        note.title.isEmpty ? 'Без названия' : note.title,
                         style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
                       subtitle: Text(
